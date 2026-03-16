@@ -1,6 +1,5 @@
 package io.jhpark.kopic.lobby.engine.infra;
 
-import io.jhpark.kopic.lobby.engine.app.EngineMigrationPort;
 import io.jhpark.kopic.lobby.engine.app.EnginePrivateRoomPort;
 import io.jhpark.kopic.lobby.engine.app.EngineQuickJoinPort;
 import io.jhpark.kopic.lobby.engine.app.EngineRandomRoomPort;
@@ -10,9 +9,6 @@ import io.jhpark.kopic.lobby.engine.domain.JoinUserCommand;
 import io.jhpark.kopic.lobby.engine.domain.PrivateRoomCreated;
 import io.jhpark.kopic.lobby.engine.domain.RandomRoomCreated;
 import io.jhpark.kopic.lobby.matchmaking.domain.QuickJoinResult;
-import io.jhpark.kopic.lobby.migration.domain.MigrationFailureReason;
-import io.jhpark.kopic.lobby.migration.domain.MigrationPayload;
-import io.jhpark.kopic.lobby.migration.domain.MigrationResult;
 import org.springframework.stereotype.Component;
 
 /**
@@ -23,8 +19,7 @@ import org.springframework.stereotype.Component;
 public class DummySampleEngineClient implements
         EnginePrivateRoomPort,
         EngineRandomRoomPort,
-        EngineQuickJoinPort,
-        EngineMigrationPort {
+        EngineQuickJoinPort {
 
     private final DummySampleLobbyStateStore stateStore;
 
@@ -47,10 +42,5 @@ public class DummySampleEngineClient implements
         return stateStore.tryJoinRandomRoom(engineId, roomId)
                 .map(roomEntry -> new QuickJoinResult(true, false, roomEntry))
                 .orElseGet(() -> new QuickJoinResult(false, false, null));
-    }
-
-    @Override
-    public MigrationResult importWaitingRoom(String targetEngineId, MigrationPayload payload) {
-        return new MigrationResult(true, null);
     }
 }

@@ -1,10 +1,8 @@
 package io.jhpark.kopic.lobby.api.internal;
 
 import io.jhpark.kopic.lobby.migration.app.RoomMigrationCoordinator;
-import io.jhpark.kopic.lobby.migration.dto.MigrationStatusResponse;
 import io.jhpark.kopic.lobby.migration.dto.ReassignRoomRequest;
 import io.jhpark.kopic.lobby.migration.dto.ReassignRoomResponse;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,10 +25,5 @@ public class MigrationAdminController {
             @RequestBody ReassignRoomRequest request
     ) {
         return ReassignRoomResponse.from(roomMigrationCoordinator.reassign(roomId, request));
-    }
-
-    @GetMapping("/{roomId}")
-    public MigrationStatusResponse getStatus(@PathVariable String roomId) {
-        return MigrationStatusResponse.from(roomMigrationCoordinator.getStatus(roomId));
     }
 }

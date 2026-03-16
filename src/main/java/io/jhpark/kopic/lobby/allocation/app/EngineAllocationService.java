@@ -24,10 +24,22 @@ public class EngineAllocationService {
     }
 
     public String allocateOwnerEngineId() {
-        return allocateOwnerEngineIdExcluding(null);
+        return allocateOwnerEngine().engineId();
     }
 
     public String allocateOwnerEngineIdExcluding(String excludedEngineId) {
+        return allocateOwnerEngineExcluding(excludedEngineId).engineId();
+    }
+
+    public EnginePresence allocateOwnerEngine() {
+        return allocateOwnerEngineExcluding(null);
+    }
+
+    public EnginePresence allocateOwnerEngineExcluding(String excludedEngineId) {
+        return selectPresence(excludedEngineId);
+    }
+
+    private EnginePresence selectPresence(String excludedEngineId) {
         List<EngineCandidate> candidates = enginePresenceReader.findActiveCandidates().stream()
                 .filter(presence -> excludedEngineId == null || !presence.engineId().equals(excludedEngineId))
                 .map(EngineCandidate::new)
@@ -35,7 +47,6 @@ public class EngineAllocationService {
 
         return engineSelectionPolicy.select(candidates)
                 .map(EngineCandidate::presence)
-                .map(EnginePresence::engineId)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.SERVICE_UNAVAILABLE,
                         "no available engine"

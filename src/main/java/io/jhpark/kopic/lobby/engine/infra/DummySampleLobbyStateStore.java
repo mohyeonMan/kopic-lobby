@@ -33,6 +33,7 @@ public class DummySampleLobbyStateStore {
     public DummySampleLobbyStateStore() {
         EnginePresence defaultEngine = new EnginePresence(
                 "ge-dummy-1",
+                "http://ge-dummy-1:8080",
                 EngineStatus.ACTIVE,
                 0,
                 Instant.now()
@@ -40,6 +41,7 @@ public class DummySampleLobbyStateStore {
         enginePresences.put(defaultEngine.engineId(), defaultEngine);
         EnginePresence secondaryEngine = new EnginePresence(
                 "ge-dummy-2",
+                "http://ge-dummy-2:8080",
                 EngineStatus.ACTIVE,
                 0,
                 Instant.now()
@@ -145,6 +147,7 @@ public class DummySampleLobbyStateStore {
                 engineId,
                 new EnginePresence(
                         presence.engineId(),
+                        presence.endpoint(),
                         presence.status(),
                         presence.activeRooms() + 1,
                         Instant.now()
