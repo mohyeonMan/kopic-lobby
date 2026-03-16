@@ -280,7 +280,7 @@ internal API 예시:
 
 `Lobby`가 소유:
 
-- migration 진행 메타 상태
+- 없음(현재 설계 기준으로 migration runtime 상태는 source/target GE가 관리)
 
 `Lobby`가 참조만 함:
 
@@ -487,7 +487,7 @@ io.jhpark.kopic.lobby
 ### Phase 3
 
 - waiting room reassignment 완성
-- migration 상태/실패 보정
+- source/target GE handoff 실패 복구 보강
 - 운영 지표/관리 API 보강
 
 ## 최종 기준
